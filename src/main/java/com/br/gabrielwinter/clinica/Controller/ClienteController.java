@@ -9,6 +9,9 @@ import com.br.gabrielwinter.clinica.Repository.entidade.ClienteDAO;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+//TODO criar classe de transferencia DTO do front para o back
+
+
 @RestController
 @AllArgsConstructor
 @RequestMapping("/cliente")
