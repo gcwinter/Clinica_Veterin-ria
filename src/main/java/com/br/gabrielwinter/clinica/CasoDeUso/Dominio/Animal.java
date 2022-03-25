@@ -8,6 +8,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Animal {
+
+    private long id;
+    private Cliente cliente;
     private String nome;
     private String tipo;
     private long peso;

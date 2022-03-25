@@ -5,10 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -23,6 +22,9 @@ public class ClienteDAO {
     private String cpf;
     private String telefone;
     private String endereco;
+    @OneToMany(mappedBy = "clienteDAO",
+            cascade = CascadeType.ALL)
+    private List<AnimalDAO> animais = new ArrayList<>();
 
 
     public ClienteDAO(Cliente cliente) {
@@ -35,7 +37,10 @@ public class ClienteDAO {
         this.cpf = cliente.getCpf();
         this.telefone = cliente.getTelefone();
         this.endereco = cliente.getEndereço();
-
+                  cliente
+                .getAnimais()
+                .stream()
+                .forEach(animal -> animais.add(new AnimalDAO(animal)));
     }
 
     public Cliente paraCliente() {
@@ -45,6 +50,8 @@ public class ClienteDAO {
         cliente.setCpf(this.cpf);
         cliente.setTelefone(this.telefone);
         cliente.setEndereço(this.endereco);
+       cliente.setAnimais(this.animais.stream().forEach(animalDAO -> new AnimalDAO().paraAnimal());
+
         return cliente;
     }
 }

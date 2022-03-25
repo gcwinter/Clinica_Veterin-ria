@@ -3,7 +3,7 @@ package com.br.gabrielwinter.clinica.Controller;
 import com.br.gabrielwinter.clinica.CasoDeUso.Cliente_Atualizar;
 import com.br.gabrielwinter.clinica.CasoDeUso.Cliente_Buscar;
 import com.br.gabrielwinter.clinica.CasoDeUso.Cliente_Cadastrar;
-import com.br.gabrielwinter.clinica.CasoDeUso.Cliente_Delete;
+import com.br.gabrielwinter.clinica.CasoDeUso.Cliente_Deletar;
 import com.br.gabrielwinter.clinica.CasoDeUso.Dominio.Cliente;
 import com.br.gabrielwinter.clinica.Repository.entidade.ClienteDAO;
 import lombok.AllArgsConstructor;
@@ -20,7 +20,7 @@ public class ClienteController {
     private final Cliente_Cadastrar cliente_cadastrar;
     private final Cliente_Buscar cliente_buscar;
     private final Cliente_Atualizar cliente_atualizar;
-    private final Cliente_Delete cliente_delete;
+    private final Cliente_Deletar cliente_delete;
 
     @PostMapping
     public ClienteDAO CadastrarCliente(@RequestBody ClienteDAO clienteDAO) {
