@@ -1,7 +1,9 @@
 package com.br.gabrielwinter.clinica.Controller;
 
 import com.br.gabrielwinter.clinica.CasoDeUso.*;
+import com.br.gabrielwinter.clinica.CasoDeUso.Dominio.Animal;
 import com.br.gabrielwinter.clinica.CasoDeUso.Dominio.Cliente;
+import com.br.gabrielwinter.clinica.Repository.entidade.AnimalDAO;
 import com.br.gabrielwinter.clinica.Repository.entidade.ClienteDAO;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -20,12 +22,12 @@ public class AnimalController {
     private final Animal_Atualizar animal_atualizar;
 
     @PostMapping
-    public ClienteDAO CadastrarCliente(@RequestBody ClienteDAO clienteDAO) {
-        Cliente cliente = cliente_cadastrar.exec(clienteDAO.paraCliente());
-        return new ClienteDAO(cliente);
+    public AnimalDAO cadastrarAnimal(@RequestBody AnimalDAO animalDAO) {
+        Animal animal = animal_cadastrar.exec(animalDAO.paraAnimal());
+        return new AnimalDAO(animal);
 
     }
-
+/*
     @GetMapping("/{id}")
     public ClienteDAO buscarCliente(@PathVariable Long id, ClienteDAO clienteDAO) {
         clienteDAO.setId(id);
@@ -48,5 +50,5 @@ public class AnimalController {
         return new ClienteDAO();
 
     }
-
+*/
 }

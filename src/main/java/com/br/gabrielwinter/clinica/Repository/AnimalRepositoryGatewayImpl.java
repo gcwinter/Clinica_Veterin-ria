@@ -35,43 +35,43 @@ public class AnimalRepositoryGatewayImpl implements AnimalRepositoryGateway {
         return null;
     }
 
+
+    /*
+        @Override
+        public Cliente deletar(Animal animal) {
+            ClienteDAO clienteDAO = new ClienteDAO(cliente);
+            if(isNull(clienteDAO)){
+                return new Cliente();
+            }
+            clienteRepository.deleteById(clienteDAO.getId());
+            return new Cliente();
+        }
+
+        @Override
+        public Animal atualizar(Animal animal) {
+            AnimalDAO animalDAO = new AnimalDAO(animal);
+           AnimalDAO animalDB = animalRepository.findById(animalDAO.getId()).get();
+            if(isNull(animalDB)){
+                return new Animal();
+            }
+            clienteAtualizar.setId(clienteDAO.getId());
+            clienteAtualizar.setNome(clienteDAO.getNome());
+            clienteAtualizar.setCpf(clienteDAO.getCpf());
+            clienteAtualizar.setTelefone(clienteDAO.getTelefone());
+            clienteAtualizar.setEndereco(clienteDAO.getEndereco());
+            clienteRepository.save(clienteAtualizar);
+            return clienteAtualizar.paraCliente();
+        }
+    */
     @Override
     public Animal buscar(Animal animal) {
-        return null;
-    }
-
-/*
-    @Override
-    public Cliente deletar(Animal animal) {
-        ClienteDAO clienteDAO = new ClienteDAO(cliente);
-        if(isNull(clienteDAO)){
-            return new Cliente();
+        AnimalDAO animalDAO = new AnimalDAO(animal);
+        AnimalDAO animalDB = animalRepository.findById(animalDAO.getId()).get();
+        if(isNull(animalDB)){
+            return new Animal();
         }
-        clienteRepository.deleteById(clienteDAO.getId());
-        return new Cliente();
+
+        return animalDB.paraAnimal();
     }
 
-    @Override
-    public Cliente atualizar(Animal animal) {
-        ClienteDAO clienteDAO = new ClienteDAO(cliente);
-        ClienteDAO clienteAtualizar = clienteRepository.findById(clienteDAO.getId()).get();
-        if(isNull(clienteAtualizar)){
-            return new Cliente();
-        }
-        clienteAtualizar.setId(clienteDAO.getId());
-        clienteAtualizar.setNome(clienteDAO.getNome());
-        clienteAtualizar.setCpf(clienteDAO.getCpf());
-        clienteAtualizar.setTelefone(clienteDAO.getTelefone());
-        clienteAtualizar.setEndereco(clienteDAO.getEndereco());
-        clienteRepository.save(clienteAtualizar);
-        return clienteAtualizar.paraCliente();
-    }
-
-    @Override
-    public Cliente buscar(Animal animal) {
-        ClienteDAO clienteDAO = new ClienteDAO(cliente);
-        ClienteDAO clienteAtualizar = clienteRepository.findById(clienteDAO.getId()).get();
-        return clienteAtualizar.paraCliente();
-    }
-    */
 }

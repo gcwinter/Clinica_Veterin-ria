@@ -1,9 +1,9 @@
 package com.br.gabrielwinter.clinica.Repository.entidade;
 
+import com.br.gabrielwinter.clinica.CasoDeUso.Dominio.Animal;
 import com.br.gabrielwinter.clinica.CasoDeUso.Dominio.Cliente;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.classmate.AnnotationOverrides;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -23,7 +23,7 @@ public class ClienteDAO {
     private String telefone;
     private String endereco;
     @OneToMany(mappedBy = "clienteDAO",
-            cascade = CascadeType.ALL)
+            cascade = CascadeType.ALL, fetch =FetchType.LAZY)
     private List<AnimalDAO> animais = new ArrayList<>();
 
 
@@ -37,10 +37,12 @@ public class ClienteDAO {
         this.cpf = cliente.getCpf();
         this.telefone = cliente.getTelefone();
         this.endereco = cliente.getEndereço();
+
+/*
                   cliente
                 .getAnimais()
-                .stream()
-                .forEach(animal -> animais.add(new AnimalDAO(animal)));
+                .forEach(animal -> this.animais.add(new AnimalDAO(animal)));
+        System.out.println(animais);*/
     }
 
     public Cliente paraCliente() {
@@ -50,8 +52,15 @@ public class ClienteDAO {
         cliente.setCpf(this.cpf);
         cliente.setTelefone(this.telefone);
         cliente.setEndereço(this.endereco);
-       cliente.setAnimais(this.animais.stream().forEach(animalDAO -> new AnimalDAO().paraAnimal());
+
+
+        System.out.println(this.animais);
+        List<Animal> listaDeAnimais = new ArrayList<>();
+        animais.forEach(animalDAO -> listaDeAnimais.add(animalDAO.paraAnimal()));
+        cliente.setAnimais(listaDeAnimais);
+
 
         return cliente;
     }
+
 }

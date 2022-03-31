@@ -4,9 +4,10 @@ import com.br.gabrielwinter.clinica.CasoDeUso.Dominio.Animal;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
 
 import javax.persistence.*;
+
+import static java.util.Objects.isNull;
 
 @Entity
 @Data
@@ -14,10 +15,11 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class AnimalDAO {
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @ManyToOne
+    private long id;
+    @ManyToOne(fetch =FetchType.LAZY)
     @JoinColumn(name = "clienteDAO_id")
     private ClienteDAO clienteDAO;
     private String nome;
@@ -25,34 +27,34 @@ public class AnimalDAO {
     private long peso;
     private long idade;
 
+        public AnimalDAO(Animal animal) {
 
-public AnimalDAO (Animal animal){
-
-    converte(animal);
-}
+        converte(animal);
+    }
 
     private void converte(Animal animal) {
         this.id = animal.getId();
         this.nome = animal.getNome();
-        this.tipo= animal.getTipo();
-        this.peso= animal.getPeso();
-        this.idade= animal.getIdade();
-        this.clienteDAO=new ClienteDAO(animal.getCliente());
+        this.tipo = animal.getTipo();
+        this.peso = animal.getPeso();
+        this.idade = animal.getIdade();
+        this.clienteDAO= new ClienteDAO(animal.getCliente());
     }
 
-    public Animal paraAnimal(){
+    public Animal paraAnimal() {
 
-    Animal animal = new Animal();
-    animal.setId(this.id);
-    animal.setIdade(this.idade);
-    animal.setNome(this.nome);
-    animal.setPeso(this.peso);
-    animal.setTipo(this.tipo);
-    animal.setCliente(this.clienteDAO.paraCliente());
-
-
-
-
+        Animal animal = new Animal();
+        animal.setId(this.id);
+        animal.setIdade(this.idade);
+        animal.setNome(this.nome);
+        animal.setPeso(this.peso);
+        animal.setTipo(this.tipo);
+       if (isNull(this.clienteDAO)) {
+            animal.setCliente(new ClienteDAO().paraCliente());
+        } else {
+           animal.setCliente(this.clienteDAO.paraCliente());
+        }
+        return animal;
     }
 
 }
