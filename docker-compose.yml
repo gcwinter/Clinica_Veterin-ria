@@ -4,11 +4,9 @@ services:
 
   MySQL_Database:
     image: mysql:latest
-    volumes:
-      - "./database/db:/var/lib/mysql"
     restart: always
     environment:
-      MYSQL_DATABASE: 'Clinica'
+      MYSQL_DATABASE: 'Clinica-vet'
       MYSQL_ROOT_PASSWORD: 'root'
     ports:
       - 3306:3306

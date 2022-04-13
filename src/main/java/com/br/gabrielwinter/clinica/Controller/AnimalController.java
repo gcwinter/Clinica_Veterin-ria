@@ -3,9 +3,12 @@ package com.br.gabrielwinter.clinica.Controller;
 import com.br.gabrielwinter.clinica.CasoDeUso.*;
 import com.br.gabrielwinter.clinica.CasoDeUso.Dominio.Animal;
 import com.br.gabrielwinter.clinica.CasoDeUso.Dominio.Cliente;
+import com.br.gabrielwinter.clinica.Controller.DTO.ClienteDTO;
+import com.br.gabrielwinter.clinica.Repository.ClienteRepository;
 import com.br.gabrielwinter.clinica.Repository.entidade.AnimalDAO;
 import com.br.gabrielwinter.clinica.Repository.entidade.ClienteDAO;
 import lombok.AllArgsConstructor;
+
 import org.springframework.web.bind.annotation.*;
 
 //TODO criar classe de transferencia DTO do front para o back
@@ -13,18 +16,27 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/cliente/animal")
+@RequestMapping("/{id}/animal")
 public class AnimalController {
 
-    private final Animal_Cadastrar animal_cadastrar;
-    private final Animal_Deletar animal_deletar;
-    private final Animal_Buscar animal_buscar;
-    private final Animal_Atualizar animal_atualizar;
+    private final Cliente_Cadastrar cliente_cadastrar;
+    private final Cliente_Buscar cliente_buscar;
+    private final Cliente_Atualizar cliente_atualizar;
+    private final Cliente_Deletar cliente_delete;
+    private final ClienteRepository clienteRepository;
 
     @PostMapping
-    public AnimalDAO cadastrarAnimal(@RequestBody AnimalDAO animalDAO) {
-        Animal animal = animal_cadastrar.exec(animalDAO.paraAnimal());
-        return new AnimalDAO(animal);
+    public ClienteDTO cadastrarAnimal(@PathVariable Long id, @RequestBody AnimalDAO animalDAO) {
+        ClienteDAO clienteDAO = clienteRepository.findById(id).get();
+        animalDAO.setClienteDAO(clienteDAO);
+        clienteDAO.addAnimais(animalDAO);
+
+        clienteRepository.save(clienteDAO);
+        clienteDAO = clienteRepository.findById(id).get();
+        return  new ClienteDTO(clienteDAO);
+                //cliente_cadastrar.exec(clienteDAO.paraCliente());
+
+
 
     }
 /*

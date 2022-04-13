@@ -1,11 +1,8 @@
 package com.br.gabrielwinter.clinica.Repository;
 
 import com.br.gabrielwinter.clinica.CasoDeUso.Dominio.Animal;
-import com.br.gabrielwinter.clinica.CasoDeUso.Dominio.Cliente;
 import com.br.gabrielwinter.clinica.CasoDeUso.gateway.AnimalRepositoryGateway;
-import com.br.gabrielwinter.clinica.CasoDeUso.gateway.ClienteRepositoryGateway;
 import com.br.gabrielwinter.clinica.Repository.entidade.AnimalDAO;
-import com.br.gabrielwinter.clinica.Repository.entidade.ClienteDAO;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -16,7 +13,7 @@ import static java.util.Objects.isNull;
 public class AnimalRepositoryGatewayImpl implements AnimalRepositoryGateway {
 
    private final AnimalRepository animalRepository;
-  
+
     @Override
     public Animal cadastar(Animal animal) {
         AnimalDAO animalDAO = new AnimalDAO(animal);

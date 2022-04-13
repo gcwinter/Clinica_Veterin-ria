@@ -5,6 +5,8 @@ import com.br.gabrielwinter.clinica.CasoDeUso.Cliente_Buscar;
 import com.br.gabrielwinter.clinica.CasoDeUso.Cliente_Cadastrar;
 import com.br.gabrielwinter.clinica.CasoDeUso.Cliente_Deletar;
 import com.br.gabrielwinter.clinica.CasoDeUso.Dominio.Cliente;
+import com.br.gabrielwinter.clinica.Controller.DTO.ClienteDTO;
+import com.br.gabrielwinter.clinica.Repository.ClienteRepository;
 import com.br.gabrielwinter.clinica.Repository.entidade.ClienteDAO;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +23,7 @@ public class ClienteController {
     private final Cliente_Buscar cliente_buscar;
     private final Cliente_Atualizar cliente_atualizar;
     private final Cliente_Deletar cliente_delete;
+    private final ClienteRepository clienteRepository;
 
     @PostMapping
     public ClienteDAO CadastrarCliente(@RequestBody ClienteDAO clienteDAO) {
@@ -30,10 +33,14 @@ public class ClienteController {
     }
 
     @GetMapping("/{id}")
-    public ClienteDAO buscarCliente(@PathVariable Long id, ClienteDAO clienteDAO) {
-        clienteDAO.setId(id);
-        Cliente cliente = cliente_buscar.exec(clienteDAO.paraCliente());
-        return new ClienteDAO(cliente);
+    public ClienteDTO buscarCliente(@PathVariable Long id){
+
+        ClienteDAO clienteDAO = clienteRepository.findById(id).get();
+        ClienteDTO clienteDTO = new ClienteDTO(clienteDAO);
+
+        //Cliente cliente = cliente_buscar.exec(clienteDTO.paraClienteDAO().paraCliente());
+        return clienteDTO;
+
     }
 
     @PutMapping("/{id}")
@@ -44,7 +51,7 @@ public class ClienteController {
     }
 
     @DeleteMapping("/{id}")
-    public ClienteDAO deletarCliente(@PathVariable Long id){
+    public ClienteDAO deletarCliente(@PathVariable Long id) {
         Cliente cliente = new Cliente();
         cliente.setId(id);
         cliente_delete.exec(cliente);

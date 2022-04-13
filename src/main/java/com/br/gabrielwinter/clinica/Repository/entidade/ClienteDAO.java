@@ -2,12 +2,12 @@ package com.br.gabrielwinter.clinica.Repository.entidade;
 
 import com.br.gabrielwinter.clinica.CasoDeUso.Dominio.Animal;
 import com.br.gabrielwinter.clinica.CasoDeUso.Dominio.Cliente;
-import com.fasterxml.classmate.AnnotationOverrides;
 import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 @NoArgsConstructor
@@ -22,12 +22,12 @@ public class ClienteDAO {
     private String cpf;
     private String telefone;
     private String endereco;
-    @OneToMany(mappedBy = "clienteDAO",
-            cascade = CascadeType.ALL, fetch =FetchType.LAZY)
-    private List<AnimalDAO> animais = new ArrayList<>();
+    @OneToMany(mappedBy = "clienteDAO")
+      private List<AnimalDAO> animaisDAO= new ArrayList<>();
 
 
     public ClienteDAO(Cliente cliente) {
+
         converte(cliente);
     }
 
@@ -38,11 +38,7 @@ public class ClienteDAO {
         this.telefone = cliente.getTelefone();
         this.endereco = cliente.getEndereço();
 
-/*
-                  cliente
-                .getAnimais()
-                .forEach(animal -> this.animais.add(new AnimalDAO(animal)));
-        System.out.println(animais);*/
+
     }
 
     public Cliente paraCliente() {
@@ -53,14 +49,17 @@ public class ClienteDAO {
         cliente.setTelefone(this.telefone);
         cliente.setEndereço(this.endereco);
 
-
-        System.out.println(this.animais);
-        List<Animal> listaDeAnimais = new ArrayList<>();
-        animais.forEach(animalDAO -> listaDeAnimais.add(animalDAO.paraAnimal()));
-        cliente.setAnimais(listaDeAnimais);
+        cliente.setAnimais(this.animaisDAO
+                .stream()
+                .map(AnimalDAO::paraAnimal)
+                .collect(Collectors.toList()));
 
 
         return cliente;
     }
 
+    public void addAnimais(AnimalDAO animalDAO){
+      this.animaisDAO.add(animalDAO);
+
+    }
 }
