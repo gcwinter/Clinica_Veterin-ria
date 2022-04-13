@@ -1,14 +1,21 @@
-version : '3.3'
+version: '3.3'
 
 services:
 
   MySQL_Database:
+<<<<<<< HEAD
     image: mysql:latest
+=======
+    image: mysql
+>>>>>>> edf46081447abf12f13bafb43e4c3e1a3555deab
     restart: always
     environment:
       MYSQL_DATABASE: 'Clinica-vet'
       MYSQL_ROOT_PASSWORD: 'root'
+    volumes:
+      - './database/db/data:/var/lib/mysql'
     ports:
       - 3306:3306
     cap_add:
-          - SYS_NICE
+      - SYS_NICE
+

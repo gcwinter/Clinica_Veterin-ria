@@ -12,6 +12,7 @@ import javax.persistence.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "Animais")
 public class AnimalDAO {
 
 
@@ -19,6 +20,7 @@ public class AnimalDAO {
     @GeneratedValue(strategy
             = GenerationType.IDENTITY)
     private long id;
+<<<<<<< HEAD
     @ManyToOne
     @JoinColumn(name = "clientedao_id")
     private ClienteDAO clienteDAO;
@@ -30,11 +32,17 @@ public class AnimalDAO {
         this.idade = idade;
     }
 
+=======
+>>>>>>> edf46081447abf12f13bafb43e4c3e1a3555deab
     private String nome;
     private String tipo;
     private long peso;
     private long idade;
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> edf46081447abf12f13bafb43e4c3e1a3555deab
     public AnimalDAO(Animal animal) {
 
         converte(animal);
@@ -46,7 +54,11 @@ public class AnimalDAO {
         this.tipo = animal.getTipo();
         this.peso = animal.getPeso();
         this.idade = animal.getIdade();
+<<<<<<< HEAD
         this.clienteDAO = new ClienteDAO(animal.getCliente());
+=======
+
+>>>>>>> edf46081447abf12f13bafb43e4c3e1a3555deab
     }
 
     public Animal paraAnimal() {

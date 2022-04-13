@@ -1,5 +1,6 @@
 package com.br.gabrielwinter.clinica.Repository;
 
+import com.br.gabrielwinter.clinica.CasoDeUso.Cliente_Buscar;
 import com.br.gabrielwinter.clinica.CasoDeUso.Dominio.Animal;
 import com.br.gabrielwinter.clinica.CasoDeUso.gateway.AnimalRepositoryGateway;
 import com.br.gabrielwinter.clinica.Repository.entidade.AnimalDAO;
@@ -12,10 +13,16 @@ import static java.util.Objects.isNull;
 @AllArgsConstructor
 public class AnimalRepositoryGatewayImpl implements AnimalRepositoryGateway {
 
+<<<<<<< HEAD
    private final AnimalRepository animalRepository;
+=======
+    private final AnimalRepository animalRepository;
+    private final Cliente_Buscar cliente_buscar;
+>>>>>>> edf46081447abf12f13bafb43e4c3e1a3555deab
 
     @Override
     public Animal cadastar(Animal animal) {
+
         AnimalDAO animalDAO = new AnimalDAO(animal);
         AnimalDAO animalDAOSalvo = animalRepository.save(animalDAO);
         animal.setId(animalDAOSalvo.getId());
@@ -64,7 +71,7 @@ public class AnimalRepositoryGatewayImpl implements AnimalRepositoryGateway {
     public Animal buscar(Animal animal) {
         AnimalDAO animalDAO = new AnimalDAO(animal);
         AnimalDAO animalDB = animalRepository.findById(animalDAO.getId()).get();
-        if(isNull(animalDB)){
+        if (isNull(animalDB)) {
             return new Animal();
         }
 
