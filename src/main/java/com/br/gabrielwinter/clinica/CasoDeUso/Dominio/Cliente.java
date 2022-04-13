@@ -1,6 +1,7 @@
 package com.br.gabrielwinter.clinica.CasoDeUso.Dominio;
 
 
+import com.br.gabrielwinter.clinica.Repository.entidade.AnimalDAO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,4 +21,7 @@ public class Cliente {
     private List<Animal> animais = new ArrayList<>();
 
 
+    public void addAnimais(Animal animal) {
+    animais.add(animal);
+    }
 }

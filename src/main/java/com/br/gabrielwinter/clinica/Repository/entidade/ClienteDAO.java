@@ -8,11 +8,13 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Table(name = "Clientes")
 public class ClienteDAO {
 
     @Id
@@ -22,8 +24,8 @@ public class ClienteDAO {
     private String cpf;
     private String telefone;
     private String endereco;
-    @OneToMany(mappedBy = "clienteDAO",
-            cascade = CascadeType.ALL, fetch =FetchType.LAZY)
+    @OneToMany(targetEntity = AnimalDAO.class, cascade =  CascadeType.ALL)
+    @JoinColumn(name = "animais_cliente")
     private List<AnimalDAO> animais = new ArrayList<>();
 
 
@@ -37,12 +39,16 @@ public class ClienteDAO {
         this.cpf = cliente.getCpf();
         this.telefone = cliente.getTelefone();
         this.endereco = cliente.getEndereço();
+        cliente.getAnimais()
+                .stream()
+                .forEach(animal -> converteLista(animal));
 
-/*
-                  cliente
-                .getAnimais()
-                .forEach(animal -> this.animais.add(new AnimalDAO(animal)));
-        System.out.println(animais);*/
+
+    }
+    public void converteLista (Animal animal){
+        AnimalDAO animalDAO = new AnimalDAO(animal);
+        this.animais.add(animalDAO);
+
     }
 
     public Cliente paraCliente() {
@@ -52,15 +58,15 @@ public class ClienteDAO {
         cliente.setCpf(this.cpf);
         cliente.setTelefone(this.telefone);
         cliente.setEndereço(this.endereco);
+        List<Animal> animais = this.animais.stream().map(AnimalDAO::paraAnimal).collect(Collectors.toList());
 
-
-        System.out.println(this.animais);
-        List<Animal> listaDeAnimais = new ArrayList<>();
-        animais.forEach(animalDAO -> listaDeAnimais.add(animalDAO.paraAnimal()));
-        cliente.setAnimais(listaDeAnimais);
-
+        cliente.setAnimais(animais);
+        System.out.println(animais);
 
         return cliente;
     }
 
+    public void addAnimalDB(AnimalDAO animalDAO) {
+        this.animais.add(animalDAO);
+    }
 }
