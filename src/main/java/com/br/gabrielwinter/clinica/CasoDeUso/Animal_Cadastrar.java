@@ -5,5 +5,5 @@ import com.br.gabrielwinter.clinica.CasoDeUso.Dominio.Animal;
 
 public interface Animal_Cadastrar {
 
-    Animal exec(Animal animal);
+    Animal exec(Long id, Animal animal);
 }

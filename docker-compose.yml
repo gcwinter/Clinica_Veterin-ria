@@ -3,11 +3,7 @@ version: '3.3'
 services:
 
   MySQL_Database:
-<<<<<<< HEAD
-    image: mysql:latest
-=======
     image: mysql
->>>>>>> edf46081447abf12f13bafb43e4c3e1a3555deab
     restart: always
     environment:
       MYSQL_DATABASE: 'Clinica-vet'

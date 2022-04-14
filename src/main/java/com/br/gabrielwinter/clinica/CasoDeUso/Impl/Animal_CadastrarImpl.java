@@ -14,7 +14,7 @@ public class Animal_CadastrarImpl implements Animal_Cadastrar {
     private final AnimalRepositoryGateway animalRepositoryGateway;
 
     @Override
-    public Animal exec(Animal animal) {
-        return animalRepositoryGateway.cadastar(animal);
+    public Animal exec(Long id,Animal animal) {
+        return animalRepositoryGateway.cadastar(id, animal);
     }
 }

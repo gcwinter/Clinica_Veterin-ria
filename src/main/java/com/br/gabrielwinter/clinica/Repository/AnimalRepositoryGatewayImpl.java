@@ -1,9 +1,12 @@
 package com.br.gabrielwinter.clinica.Repository;
 
 import com.br.gabrielwinter.clinica.CasoDeUso.Cliente_Buscar;
+import com.br.gabrielwinter.clinica.CasoDeUso.Cliente_Cadastrar;
 import com.br.gabrielwinter.clinica.CasoDeUso.Dominio.Animal;
+import com.br.gabrielwinter.clinica.CasoDeUso.Dominio.Cliente;
 import com.br.gabrielwinter.clinica.CasoDeUso.gateway.AnimalRepositoryGateway;
 import com.br.gabrielwinter.clinica.Repository.entidade.AnimalDAO;
+import com.br.gabrielwinter.clinica.Repository.entidade.ClienteDAO;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -13,20 +16,19 @@ import static java.util.Objects.isNull;
 @AllArgsConstructor
 public class AnimalRepositoryGatewayImpl implements AnimalRepositoryGateway {
 
-<<<<<<< HEAD
-   private final AnimalRepository animalRepository;
-=======
     private final AnimalRepository animalRepository;
     private final Cliente_Buscar cliente_buscar;
->>>>>>> edf46081447abf12f13bafb43e4c3e1a3555deab
+    private final Cliente_Cadastrar cliente_cadastrar;
 
     @Override
-    public Animal cadastar(Animal animal) {
-
-        AnimalDAO animalDAO = new AnimalDAO(animal);
-        AnimalDAO animalDAOSalvo = animalRepository.save(animalDAO);
-        animal.setId(animalDAOSalvo.getId());
-        return animal;
+    public Animal cadastar(Long id, Animal animal) {
+        Cliente cliente = new Cliente();
+        cliente.setId(id);
+        cliente = cliente_buscar.exec(cliente);
+        ClienteDAO clienteDAO = new ClienteDAO(cliente);
+        clienteDAO.addAnimais(animal);
+        cliente = cliente_cadastrar.exec(clienteDAO.paraCliente());
+        return cliente.getAnimais().get(cliente.getAnimais().size() - 1);
     }
 
     @Override

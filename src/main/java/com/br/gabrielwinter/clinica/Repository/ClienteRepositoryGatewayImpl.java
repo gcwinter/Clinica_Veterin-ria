@@ -56,7 +56,6 @@ public class ClienteRepositoryGatewayImpl implements ClienteRepositoryGateway {
         ClienteDAO clienteDAO = new ClienteDAO(cliente);
         ClienteDAO clienteBuscado = clienteRepository.findById(clienteDAO.getId()).get();
        List<AnimalDAO> animalDAOS =  clienteBuscado.getAnimaisDAO();
-       animalDAOS.forEach(System.out::println);
         return clienteBuscado.paraCliente();
     }
 }

@@ -35,7 +35,7 @@ public class ClienteDTO {
         this.cpf = cliente.getCpf();
         this.telefone = cliente.getTelefone();
         this.endereco = cliente.getEndereço();
-        cliente.getAnimais().forEach(Animal->addAnimalDB(new AnimalDTO(Animal)));
+        cliente.getAnimais().forEach(Animal->addAnimalDB(Animal));
 
     }
 
@@ -53,7 +53,7 @@ public class ClienteDTO {
         return cliente;
     }
 
-    public void addAnimalDB(AnimalDTO animalDTO) {
-        this.animais.add(animalDTO);
+    public void addAnimalDB(Animal animal) {
+        this.animais.add(new AnimalDTO(animal));
     }
 }
