@@ -18,7 +18,7 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/{id}/animal")
+@RequestMapping("/animal")
 public class AnimalController {
 
     private final Animal_Cadastrar animal_cadastrar;
@@ -28,7 +28,7 @@ public class AnimalController {
     private final AnimalRepository animalRepository;
 
 
-    @PostMapping
+    @PostMapping("/{id}")
     public AnimalDTO cadastrarAnimal(@PathVariable long id, @RequestBody AnimalDTO animalDTO) {
         Animal animal = animal_cadastrar.exec(id, animalDTO.paraAnimal());
         return new AnimalDTO(animal);
@@ -36,26 +36,26 @@ public class AnimalController {
     }
 
     @GetMapping("/all")
-    public List<AnimalDAO> buscarCliente() {
+    public List<AnimalDAO> buscarAnimais() {
         List<AnimalDAO> animais = animalRepository.findAll();
 
         return animais;
     }
-/*
-    @PutMapping("/{id}")
-    public ClienteDAO atualizarCliente(@PathVariable Long id, @RequestBody ClienteDAO clienteDAO) {
-        clienteDAO.setId(id);
-        Cliente cliente = cliente_atualizar.exec(clienteDAO.paraCliente());
-        return new ClienteDAO(cliente);
-    }
 
+    /*
+        @PutMapping("/{id}")
+        public ClienteDAO atualizarCliente(@PathVariable Long id, @RequestBody ClienteDAO clienteDAO) {
+            clienteDAO.setId(id);
+            Cliente cliente = cliente_atualizar.exec(clienteDAO.paraCliente());
+            return new ClienteDAO(cliente);
+        }
+    */
     @DeleteMapping("/{id}")
-    public ClienteDAO deletarCliente(@PathVariable Long id){
-        Cliente cliente = new Cliente();
-        cliente.setId(id);
-        cliente_delete.exec(cliente);
-        return new ClienteDAO();
-
+    public AnimalDTO deletarAnimal(@PathVariable Long id) {
+        AnimalDTO animalDTO = new AnimalDTO();
+        animalDTO.setId(id);
+        return new AnimalDTO(
+                animal_deletar.exec(animalDTO.paraAnimal()));
     }
-*/
+
 }

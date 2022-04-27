@@ -27,11 +27,10 @@ public class ClienteDAO {
     private String cpf;
     private String telefone;
     private String endereco;
-    @OneToMany(mappedBy = "clienteDAO")
-      private List<AnimalDAO> animaisDAO= new ArrayList<>();
+
     @OneToMany(targetEntity = AnimalDAO.class, cascade =  CascadeType.ALL)
     @JoinColumn(name = "animais_cliente")
-    private List<AnimalDAO> animais = new ArrayList<>();
+    private List<AnimalDAO> animaisDAO = new ArrayList<>();
 
 
     public ClienteDAO(Cliente cliente) {
@@ -52,7 +51,7 @@ public class ClienteDAO {
     }
     public void converteLista (Animal animal){
         AnimalDAO animalDAO = new AnimalDAO(animal);
-        this.animais.add(animalDAO);
+        this.animaisDAO.add(animalDAO);
 
     }
 
@@ -63,7 +62,7 @@ public class ClienteDAO {
         cliente.setCpf(this.cpf);
         cliente.setTelefone(this.telefone);
         cliente.setEndereço(this.endereco);
-        List<Animal> animais = this.animais.stream().map(AnimalDAO::paraAnimal).collect(Collectors.toList());
+        List<Animal> animais = this.animaisDAO.stream().map(AnimalDAO::paraAnimal).collect(Collectors.toList());
 
         cliente.setAnimais(this.animaisDAO
                 .stream()
@@ -80,4 +79,5 @@ public class ClienteDAO {
       this.animaisDAO.add(new AnimalDAO(animal));
 
     }
+
 }

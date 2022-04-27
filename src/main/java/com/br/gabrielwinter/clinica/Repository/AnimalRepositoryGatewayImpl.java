@@ -27,13 +27,19 @@ public class AnimalRepositoryGatewayImpl implements AnimalRepositoryGateway {
         cliente = cliente_buscar.exec(cliente);
         ClienteDAO clienteDAO = new ClienteDAO(cliente);
         clienteDAO.addAnimais(animal);
+        System.out.println(clienteDAO.getAnimaisDAO());
         cliente = cliente_cadastrar.exec(clienteDAO.paraCliente());
+        cliente = cliente_buscar.exec(cliente);
         return cliente.getAnimais().get(cliente.getAnimais().size() - 1);
     }
 
     @Override
     public Animal deletar(Animal animal) {
-        return null;
+        AnimalDAO animalDAO = new AnimalDAO(animal);
+        animalRepository.deleteById(animalDAO.getId());
+        return new Animal();
+
+
     }
 
     @Override
@@ -41,34 +47,6 @@ public class AnimalRepositoryGatewayImpl implements AnimalRepositoryGateway {
         return null;
     }
 
-
-    /*
-        @Override
-        public Cliente deletar(Animal animal) {
-            ClienteDAO clienteDAO = new ClienteDAO(cliente);
-            if(isNull(clienteDAO)){
-                return new Cliente();
-            }
-            clienteRepository.deleteById(clienteDAO.getId());
-            return new Cliente();
-        }
-
-        @Override
-        public Animal atualizar(Animal animal) {
-            AnimalDAO animalDAO = new AnimalDAO(animal);
-           AnimalDAO animalDB = animalRepository.findById(animalDAO.getId()).get();
-            if(isNull(animalDB)){
-                return new Animal();
-            }
-            clienteAtualizar.setId(clienteDAO.getId());
-            clienteAtualizar.setNome(clienteDAO.getNome());
-            clienteAtualizar.setCpf(clienteDAO.getCpf());
-            clienteAtualizar.setTelefone(clienteDAO.getTelefone());
-            clienteAtualizar.setEndereco(clienteDAO.getEndereco());
-            clienteRepository.save(clienteAtualizar);
-            return clienteAtualizar.paraCliente();
-        }
-    */
     @Override
     public Animal buscar(Animal animal) {
         AnimalDAO animalDAO = new AnimalDAO(animal);
@@ -79,5 +57,40 @@ public class AnimalRepositoryGatewayImpl implements AnimalRepositoryGateway {
 
         return animalDB.paraAnimal();
     }
-
 }
+
+
+
+    /*
+
+            @Override
+            public Cliente deletar(Animal animal) {
+                ClienteDAO clienteDAO = new ClienteDAO(cliente);
+                if(isNull(clienteDAO)){
+                    return new Cliente();
+                }
+                clienteRepository.deleteById(clienteDAO.getId());
+                return new Cliente();
+            }
+
+            @Override
+            public Animal atualizar(Animal animal) {
+                AnimalDAO animalDAO = new AnimalDAO(animal);
+               AnimalDAO animalDB = animalRepository.findById(animalDAO.getId()).get();
+                if(isNull(animalDB)){
+                    return new Animal();
+                }
+                clienteAtualizar.setId(clienteDAO.getId());
+                clienteAtualizar.setNome(clienteDAO.getNome());
+                clienteAtualizar.setCpf(clienteDAO.getCpf());
+                clienteAtualizar.setTelefone(clienteDAO.getTelefone());
+                clienteAtualizar.setEndereco(clienteDAO.getEndereco());
+                clienteRepository.save(clienteAtualizar);
+                return clienteAtualizar.paraCliente();
+            }
+   */
+
+
+
+
+
