@@ -10,8 +10,6 @@ import com.br.gabrielwinter.clinica.Repository.entidade.ClienteDAO;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 
-import static java.util.Objects.isNull;
-
 @Repository
 @AllArgsConstructor
 public class AnimalRepositoryGatewayImpl implements AnimalRepositoryGateway {
@@ -27,7 +25,6 @@ public class AnimalRepositoryGatewayImpl implements AnimalRepositoryGateway {
         cliente = cliente_buscar.exec(cliente);
         ClienteDAO clienteDAO = new ClienteDAO(cliente);
         clienteDAO.addAnimais(animal);
-        System.out.println(clienteDAO.getAnimaisDAO());
         cliente = cliente_cadastrar.exec(clienteDAO.paraCliente());
         cliente = cliente_buscar.exec(cliente);
         return cliente.getAnimais().get(cliente.getAnimais().size() - 1);
@@ -44,17 +41,13 @@ public class AnimalRepositoryGatewayImpl implements AnimalRepositoryGateway {
 
     @Override
     public Animal atualizar(Animal animal) {
-        return null;
+       return animalRepository.save(new AnimalDAO(animal)).paraAnimal();
     }
 
     @Override
     public Animal buscar(Animal animal) {
         AnimalDAO animalDAO = new AnimalDAO(animal);
         AnimalDAO animalDB = animalRepository.findById(animalDAO.getId()).get();
-        if (isNull(animalDB)) {
-            return new Animal();
-        }
-
         return animalDB.paraAnimal();
     }
 }
@@ -63,15 +56,7 @@ public class AnimalRepositoryGatewayImpl implements AnimalRepositoryGateway {
 
     /*
 
-            @Override
-            public Cliente deletar(Animal animal) {
-                ClienteDAO clienteDAO = new ClienteDAO(cliente);
-                if(isNull(clienteDAO)){
-                    return new Cliente();
-                }
-                clienteRepository.deleteById(clienteDAO.getId());
-                return new Cliente();
-            }
+
 
             @Override
             public Animal atualizar(Animal animal) {

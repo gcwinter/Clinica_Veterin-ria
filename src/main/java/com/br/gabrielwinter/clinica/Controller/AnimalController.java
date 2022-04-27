@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-//TODO criar classe de transferencia DTO do front para o back
-
 
 @RestController
 @AllArgsConstructor
@@ -30,26 +28,21 @@ public class AnimalController {
 
     @PostMapping("/{id}")
     public AnimalDTO cadastrarAnimal(@PathVariable long id, @RequestBody AnimalDTO animalDTO) {
-        Animal animal = animal_cadastrar.exec(id, animalDTO.paraAnimal());
-        return new AnimalDTO(animal);
+        return new AnimalDTO(animal_cadastrar.exec(id, animalDTO.paraAnimal()));
 
     }
 
     @GetMapping("/all")
     public List<AnimalDAO> buscarAnimais() {
-        List<AnimalDAO> animais = animalRepository.findAll();
+        return animalRepository.findAll();
 
-        return animais;
     }
 
-    /*
-        @PutMapping("/{id}")
-        public ClienteDAO atualizarCliente(@PathVariable Long id, @RequestBody ClienteDAO clienteDAO) {
-            clienteDAO.setId(id);
-            Cliente cliente = cliente_atualizar.exec(clienteDAO.paraCliente());
-            return new ClienteDAO(cliente);
-        }
-    */
+    @PutMapping("/{id}")
+    public AnimalDTO atualizaAnimal(@RequestBody AnimalDTO animalDTO) {
+        return new AnimalDTO(animal_atualizar.exec(animalDTO.paraAnimal()));
+    }
+
     @DeleteMapping("/{id}")
     public AnimalDTO deletarAnimal(@PathVariable Long id) {
         AnimalDTO animalDTO = new AnimalDTO();

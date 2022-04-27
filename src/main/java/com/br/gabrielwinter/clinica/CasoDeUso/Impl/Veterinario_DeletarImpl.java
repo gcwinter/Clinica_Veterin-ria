@@ -1,0 +1,17 @@
+package com.br.gabrielwinter.clinica.CasoDeUso.Impl;
+
+import com.br.gabrielwinter.clinica.CasoDeUso.Dominio.Veterinario;
+import com.br.gabrielwinter.clinica.CasoDeUso.Veterinario_Deletar;
+import com.br.gabrielwinter.clinica.CasoDeUso.gateway.VeterinarioRepositoryGateway;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
+@AllArgsConstructor
+@Service
+public class Veterinario_DeletarImpl implements Veterinario_Deletar {
+
+    VeterinarioRepositoryGateway veterinarioRepositoryGateway;
+    @Override
+    public Veterinario exec(Veterinario veterinario) {
+        return veterinarioRepositoryGateway.deletar(veterinario);
+    }
+}
