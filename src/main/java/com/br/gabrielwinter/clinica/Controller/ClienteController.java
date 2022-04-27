@@ -12,7 +12,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 //TODO criar classe de transferencia DTO do front para o back
 
@@ -40,7 +39,6 @@ public class ClienteController {
         ClienteDTO clienteDTO = new ClienteDTO();
         clienteDTO.setId(id);
         Cliente cliente = cliente_buscar.exec(clienteDTO.paraCliente());
-        cliente.getAnimais().stream().forEach(System.out::println);
         return new ClienteDTO(cliente);
     }
 

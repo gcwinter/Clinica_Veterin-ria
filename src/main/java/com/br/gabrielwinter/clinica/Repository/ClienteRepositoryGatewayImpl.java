@@ -2,9 +2,12 @@ package com.br.gabrielwinter.clinica.Repository;
 
 import com.br.gabrielwinter.clinica.CasoDeUso.Dominio.Cliente;
 import com.br.gabrielwinter.clinica.CasoDeUso.gateway.ClienteRepositoryGateway;
+import com.br.gabrielwinter.clinica.Repository.entidade.AnimalDAO;
 import com.br.gabrielwinter.clinica.Repository.entidade.ClienteDAO;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 import static java.util.Objects.isNull;
 
@@ -51,7 +54,8 @@ public class ClienteRepositoryGatewayImpl implements ClienteRepositoryGateway {
     @Override
     public Cliente buscar(Cliente cliente) {
         ClienteDAO clienteDAO = new ClienteDAO(cliente);
-        ClienteDAO clienteAtualizar = clienteRepository.findById(clienteDAO.getId()).get();
-        return clienteAtualizar.paraCliente();
+        ClienteDAO clienteBuscado = clienteRepository.findById(clienteDAO.getId()).get();
+       List<AnimalDAO> animalDAOS =  clienteBuscado.getAnimaisDAO();
+        return clienteBuscado.paraCliente();
     }
 }

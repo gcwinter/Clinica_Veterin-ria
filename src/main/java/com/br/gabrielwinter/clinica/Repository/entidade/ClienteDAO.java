@@ -2,15 +2,18 @@ package com.br.gabrielwinter.clinica.Repository.entidade;
 
 import com.br.gabrielwinter.clinica.CasoDeUso.Dominio.Animal;
 import com.br.gabrielwinter.clinica.CasoDeUso.Dominio.Cliente;
-import com.fasterxml.classmate.AnnotationOverrides;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -24,24 +27,26 @@ public class ClienteDAO {
     private String cpf;
     private String telefone;
     private String endereco;
+    @OneToMany(mappedBy = "clienteDAO")
+      private List<AnimalDAO> animaisDAO= new ArrayList<>();
     @OneToMany(targetEntity = AnimalDAO.class, cascade =  CascadeType.ALL)
     @JoinColumn(name = "animais_cliente")
     private List<AnimalDAO> animais = new ArrayList<>();
 
 
     public ClienteDAO(Cliente cliente) {
-        converte(cliente);
+
+        paraClienteDAO(cliente);
     }
 
-    private void converte(Cliente cliente) {
+    private void paraClienteDAO(Cliente cliente) {
         this.id = cliente.getId();
         this.nome = cliente.getNome();
         this.cpf = cliente.getCpf();
         this.telefone = cliente.getTelefone();
         this.endereco = cliente.getEndereço();
         cliente.getAnimais()
-                .stream()
-                .forEach(animal -> converteLista(animal));
+                .forEach(this::converteLista);
 
 
     }
@@ -60,13 +65,19 @@ public class ClienteDAO {
         cliente.setEndereço(this.endereco);
         List<Animal> animais = this.animais.stream().map(AnimalDAO::paraAnimal).collect(Collectors.toList());
 
+        cliente.setAnimais(this.animaisDAO
+                .stream()
+                .map(AnimalDAO::paraAnimal)
+                .collect(Collectors.toList()));
+
         cliente.setAnimais(animais);
         System.out.println(animais);
 
         return cliente;
     }
 
-    public void addAnimalDB(AnimalDAO animalDAO) {
-        this.animais.add(animalDAO);
+    public void addAnimais(Animal animal){
+      this.animaisDAO.add(new AnimalDAO(animal));
+
     }
 }

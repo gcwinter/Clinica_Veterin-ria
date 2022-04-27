@@ -2,15 +2,13 @@ package com.br.gabrielwinter.clinica.Repository.entidade;
 
 import com.br.gabrielwinter.clinica.CasoDeUso.Dominio.Animal;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-import static java.util.Objects.isNull;
-
 @Entity
-@Data
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "Animais")
@@ -18,8 +16,14 @@ public class AnimalDAO {
 
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy
+            = GenerationType.IDENTITY)
     private long id;
+    @ManyToOne
+    @JoinColumn(name = "clientedao_id")
+    private ClienteDAO clienteDAO;
+
+
     private String nome;
     private String tipo;
     private long peso;
@@ -28,16 +32,15 @@ public class AnimalDAO {
 
     public AnimalDAO(Animal animal) {
 
-        converte(animal);
+        paraAnimalDAO(animal);
     }
 
-    private void converte(Animal animal) {
+    private void paraAnimalDAO(Animal animal) {
         this.id = animal.getId();
         this.nome = animal.getNome();
         this.tipo = animal.getTipo();
         this.peso = animal.getPeso();
         this.idade = animal.getIdade();
-
     }
 
     public Animal paraAnimal() {
